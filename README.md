@@ -1,9 +1,22 @@
 ### Test 1
-@todo
 
+##### Quickstart
+The source code is located in `app.js` file. Node 18 was used, but any version above 10/12 should be able to run this
+* checkout the repo locally
+* Navigate to the tech-test directory: `cd tech-test`
+* Install dependencies: `npm install`
+* Run the application: `node app.js`
+* Enjoy your personnal therapist :)
+
+##### Used dependencies
+* `@xenova/transformers` as asked for the NLP, see https://huggingface.co/docs/transformers.js/index#quick-tour
+* `prompt-sync` to prompt for user input
+* `lodash` to round the answer (lodash is always helpful anyways)
+
+##### Possible improvements
+* containerizing the app
 
 ### Test 2
-
 
 Based on the changes, I would suggest to:
 * remove `$country` if not used?
@@ -16,8 +29,6 @@ Based on the changes, I would suggest to:
 About the lines that were not changed, I would suggest:
 * renaming the method in a more descriptive way
 * refactoring the calling of the SMS service api in a singleton wrapper that could expose a method to send messages with message & target args in the method & all other parameters in the constructor
-
-
 
 ### Test 3
 
@@ -44,10 +55,12 @@ Resolving the issue will depend a lot on the source of this issue, this may be
 
 The error means that one of the production AWS virtual machines used more than 80% of its CPU (83%). NB : This alert occured at 00:12:00
 
-> One the interesting elements of this alert is the time: A lot of batches are triggered during night, so it may be a running batch that consumes CPU during its execution time.
+> One the interesting elements of this alert is the time: A lot of batches are triggered during night, so it may be a running batch that consumes CPU during its execution time that may cool down in a few minutes
 
 *The test question mentions that CPU on prod has been at an average of 95% in the last 3 hours, so I will base my assumptions on this statement*
 
-1. we can check what is or should be running on this VM (check inventory, or connect to it and check the running services/containers). Is it a batch service? Some API? Other?
-1. `htop` on the machine to get the ressource consuming processes
-1. Check logs, infinite loops, @todo
+1. we can check what is (or should be) running on this VM (check inventory, or connect to it and check the running services/containers). Is it a batch service? Some API? Other?
+1. `htop` on the machine to identify ressource-consuming processes
+1. Check logs of the app
+
+Resolution may vary depending on the root cause. This may involve rollback, moving services to another VM, increasing the threshold of the alert or add temporary/permanent CPU when something changed internally to checking cloudflare/enabling attack mode, blacklisting ips if this alert concerns a dmz machine for example.
