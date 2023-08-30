@@ -18,15 +18,14 @@ The source code is located in `app.js` file. Node 18 was used, but any version a
 
 ### Test 2
 
-Based on the changes, I would suggest to:
+Considering this function was added in the PR, I would suggest to:
+* ask ourselves if the public visibility is the most suited for the job
 * remove `$country` if not used?
 * setting up application key as env variable
-* being careful with calling other apps
+* focus on error handling
     * either in get or in post request you should be able to see in the logs that something's gone bad with a service unavailable for example
     * `'true' ` is always returned, so no there is no mechanism that could warn or call a fallback mechanism (retry?)
 * ask ourselves why extracting `$this->message` into `$message` before calling when `$this->target` is provided as argument for the call
-
-About the lines that were not changed, I would suggest:
 * renaming the method in a more descriptive way
 * refactoring the calling of the SMS service api in a singleton wrapper that could expose a method to send messages with message & target args in the method & all other parameters in the constructor
 
